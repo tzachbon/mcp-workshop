@@ -27,6 +27,8 @@ Three tools:
 6. Click **"Create token"**
 7. **Copy the token** (starts with `pat_...`) - you won't see it again!
 
+![image.png](./image.png)
+
 More details: [Airtable PAT Documentation](https://support.airtable.com/docs/creating-personal-access-tokens)
 
 ## Step 2: Find Your Base ID
@@ -51,5 +53,3 @@ We'll use environment variables to keep your token secure:
 ## Working Example
 
 See `examples/airtable/` in the workshop root for a complete working implementation.
-
-

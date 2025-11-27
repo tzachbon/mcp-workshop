@@ -45,7 +45,20 @@ Copy and paste this entire prompt into Cursor:
 
 **Required files:**
 
-**1. package.json:**
+**1. .npmrc** (for Autodesk npm registry):
+```
+registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual
+```
+
+**2. .gitignore:**
+```
+node_modules/
+dist/
+.env
+*.log
+```
+
+**3. package.json:**
 ```json
 {
   "name": "airtable-mcp",
@@ -66,7 +79,7 @@ Copy and paste this entire prompt into Cursor:
 }
 ```
 
-**2. tsconfig.json:**
+**4. tsconfig.json:**
 ```json
 {
   "compilerOptions": {
@@ -80,7 +93,7 @@ Copy and paste this entire prompt into Cursor:
 }
 ```
 
-**3. src/index.ts:**
+**5. src/index.ts:**
 ```typescript
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';

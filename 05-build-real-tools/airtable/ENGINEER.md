@@ -6,6 +6,25 @@
 mkdir airtable-mcp
 cd airtable-mcp
 npm init -y
+```
+
+Create `.npmrc` for Autodesk registry:
+```bash
+echo "registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual" > .npmrc
+```
+
+Create `.gitignore`:
+```bash
+cat > .gitignore << EOF
+node_modules/
+dist/
+.env
+*.log
+EOF
+```
+
+Install dependencies:
+```bash
 npm install @modelcontextprotocol/sdk zod
 npm install -D typescript ts-node @types/node
 ```
