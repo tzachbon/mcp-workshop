@@ -296,3 +296,16 @@ Ideas for more tools:
 - `delete-record` - Delete a record
 - `search-records` - Filter records by field value
 - `list-tables` - List all tables in the base
+
+## What's Next?
+
+You've built a basic Airtable MCP server. Want to add more capabilities?
+
+**Use the Airtable API documentation to generate more tools:**
+
+1. Browse the full API reference: [Airtable Web API Documentation](https://airtable.com/developers/web/api/get-user-id-scopes)
+2. Find an endpoint you want to use (e.g., update record, delete record, list bases)
+3. Copy the API specification or describe the endpoint to Cursor
+4. Ask Cursor: *"Add a new tool to my Airtable MCP server based on this API spec"*
+
+Cursor can read API documentation and generate the corresponding MCP tool for you automatically. Just provide the endpoint details and it will create the tool with proper input/output schemas.

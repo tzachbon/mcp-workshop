@@ -305,3 +305,26 @@ echo "$HOME/.cursor/mcp.json"
 | `list-records` | Shows all records from your table |
 | `get-record` | Gets one record by its ID |
 | `create-record` | Adds a new record to your table |
+
+## What's Next?
+
+Want to add more Airtable capabilities? You can generate new tools from the API documentation!
+
+**How to add more tools:**
+
+1. Go to the [Airtable Web API Documentation](https://airtable.com/developers/web/api/get-user-id-scopes)
+2. Find an endpoint you want (e.g., update record, delete record)
+3. Ask Cursor with this prompt:
+
+---
+
+**Add a new tool to my Airtable MCP server.**
+
+Here's the API endpoint I want to use:
+[Paste the API documentation or describe the endpoint]
+
+Add it to my existing `airtable-mcp/src/index.ts` file following the same pattern as the other tools.
+
+---
+
+Cursor can read API specifications and automatically generate MCP tools for you. Just show it what endpoint you want and it will create the tool with proper input/output schemas!
