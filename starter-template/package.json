@@ -1,0 +1,21 @@
+{
+  "name": "my-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server starter template",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "npx -y ts-node --esm src/index.ts",
+    "dev": "npx -y ts-node --esm src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.3.0"
+  }
+}
+

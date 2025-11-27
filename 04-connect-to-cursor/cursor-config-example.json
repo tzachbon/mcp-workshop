@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "my-mcp-server": {
+      "command": "npx",
+      "args": ["-y", "ts-node", "--esm", "/Users/yourname/projects/my-mcp-server/src/index.ts"]
+    },
+    "airtable-server": {
+      "command": "npx",
+      "args": ["-y", "ts-node", "--esm", "/Users/yourname/projects/mcp-workshop/examples/airtable/src/index.ts"],
+      "env": {
+        "AIRTABLE_PAT": "pat_your_token_here",
+        "AIRTABLE_BASE_ID": "appXXXXXXXXXXXXX",
+        "AIRTABLE_TABLE_NAME": "Tasks"
+      }
+    }
+  }
+}
