@@ -1,7 +1,6 @@
 {
-  "name": "airtable-mcp",
+  "name": "my-mcp-server",
   "version": "1.0.0",
-  "description": "MCP server for Airtable",
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
@@ -17,5 +16,4 @@
     "typescript": "^5.3.0"
   }
 }
-
 

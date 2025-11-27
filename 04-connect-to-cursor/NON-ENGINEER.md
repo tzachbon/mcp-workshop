@@ -10,50 +10,64 @@ Copy and paste this entire prompt into Cursor:
 
 ---
 
-**Help me configure Cursor to use my MCP server.**
+**I need you to configure Cursor to use my MCP server. Do this automatically by editing the config file.**
 
 **Step 1: Find my server's absolute path**
 
-Run this command to find the absolute path to my MCP server:
+Run this command:
 ```bash
 cd my-mcp-server && pwd
 ```
 
-Tell me the full absolute path to the `src/index.ts` file.
+Save the output - this is my project path. The full path to my server file is: `{project_path}/src/index.ts`
 
-**Step 2: Create the Cursor MCP configuration**
+**Step 2: Find and read the Cursor MCP config**
 
-The configuration should look like this (with my actual path):
+First, find my home directory and the config file path:
+```bash
+echo "$HOME/.cursor/mcp.json"
+```
+
+The config file is at that path (e.g., `/Users/myusername/.cursor/mcp.json`).
+
+Read this file. If it doesn't exist or the `.cursor` folder doesn't exist, create them:
+```bash
+mkdir -p "$HOME/.cursor"
+```
+
+**Step 3: Update the config file**
+
+Add my server to the `mcpServers` object. The entry should look like this:
 
 ```json
-{
-  "mcpServers": {
-    "my-mcp-server": {
-      "command": "npx",
-      "args": ["-y", "ts-node", "--esm", "/ABSOLUTE/PATH/TO/my-mcp-server/src/index.ts"]
-    }
-  }
+"my-mcp-server": {
+  "command": "npx",
+  "args": [
+    "--registry", "https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual",
+    "-y", "ts-node", "--esm", "/ABSOLUTE/PATH/TO/my-mcp-server/src/index.ts"
+  ]
 }
 ```
 
-**Step 3: Guide me to add this to Cursor**
+**Important rules:**
+- Replace `/ABSOLUTE/PATH/TO/` with the actual path from Step 1
+- Keep any existing servers in the config - don't delete them
+- Make sure the JSON is valid after editing
 
-Tell me exactly how to:
-1. Open Cursor Settings (the Cursor-specific settings, not VS Code settings)
-2. Navigate to Features → MCP Servers
-3. Add my server configuration with the correct absolute path
+**Step 4: Write the updated config**
 
-**Step 4: Verify it works**
+Save the updated config back to the mcp.json file.
 
-After I add the configuration:
-1. Tell me to restart Cursor
-2. Tell me how to check if the server connected successfully
-3. Tell me to test by asking you to "use the greet tool to say hello to my name"
+**Step 5: Tell me what to do next**
 
-**Important:**
-- The path MUST be absolute (starting with `/` on Mac/Linux or `C:\` on Windows)
-- Relative paths like `./src/index.ts` will NOT work
-- The path must point to the actual `src/index.ts` file
+After updating the file:
+1. Tell me to restart Cursor (Cmd+Shift+P → "Reload Window" or quit and reopen)
+2. Tell me to test by typing: "Use the greet tool to say hello to Alice"
+
+**Success criteria:**
+- The mcp.json file is updated with my server entry
+- The path in the config is absolute (starts with `/` on Mac or `C:\` on Windows)
+- Existing MCP servers in the config are preserved
 
 ---
 
@@ -61,73 +75,79 @@ After I add the configuration:
 
 After running this prompt, Cursor will:
 1. Find your server's absolute path
-2. Show you the exact configuration to add
-3. Guide you through Cursor's settings
-4. Help you verify the connection works
+2. Read your existing Cursor MCP config
+3. Add your server to the config (keeping other servers)
+4. Save the updated config
+5. Tell you to restart and test
 
-## Manual Steps (if prompt doesn't work)
+## Config File Location
 
-If Cursor can't help with settings directly:
-
-### 1. Find your path
-
-In terminal:
+Run this to find your exact path:
 ```bash
-cd my-mcp-server
-pwd
+echo "$HOME/.cursor/mcp.json"
 ```
 
-Add `/src/index.ts` to the output. For example:
-`/Users/yourname/projects/my-mcp-server/src/index.ts`
+| OS | Path |
+|----|------|
+| macOS | `/Users/{username}/.cursor/mcp.json` |
+| Windows | `C:\Users\{username}\.cursor\mcp.json` |
+| Linux | `/home/{username}/.cursor/mcp.json` |
 
-### 2. Open Cursor Settings
+## What The Config Looks Like
 
-- Press `Cmd+,` (Mac) or `Ctrl+,` (Windows/Linux)
-- Look for "Cursor Settings" (not "Settings")
-- Or: Click the gear icon → select "Cursor Settings"
-
-### 3. Find MCP Servers
-
-- Go to Features section
-- Click on MCP Servers
-
-### 4. Add your server
-
-Add this configuration (replace the path with yours):
+After the update, your `~/.cursor/mcp.json` should look something like:
 
 ```json
 {
   "mcpServers": {
     "my-mcp-server": {
       "command": "npx",
-      "args": ["-y", "ts-node", "--esm", "/YOUR/ACTUAL/PATH/my-mcp-server/src/index.ts"]
+      "args": [
+        "--registry", "https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual",
+        "-y", "ts-node", "--esm", "/Users/yourname/projects/my-mcp-server/src/index.ts"
+      ]
     }
   }
 }
 ```
 
-### 5. Restart and test
+If you had other servers already, they'll still be there:
 
-1. Restart Cursor
-2. In chat, type: "Use the greet tool to say hello to Alice"
-3. You should see: "Hello, Alice! Welcome to MCP."
+```json
+{
+  "mcpServers": {
+    "some-other-server": { ... },
+    "my-mcp-server": {
+      "command": "npx",
+      "args": [
+        "--registry", "https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual",
+        "-y", "ts-node", "--esm", "/Users/yourname/projects/my-mcp-server/src/index.ts"
+      ]
+    }
+  }
+}
+```
 
 ## Troubleshooting
 
-**Can't find Cursor Settings?**
-- It's different from VS Code Settings
-- Look for "Cursor" in the settings menu, not "Settings (JSON)"
+**"File not found" error?**
+- The mcp.json file might not exist yet
+- Ask Cursor to create it with just your server config
 
-**Server not connecting?**
-- Double-check the absolute path
-- Make sure there are no typos
-- Try restarting Cursor
+**Server not appearing after restart?**
+- Check that the mcp.json file was actually saved
+- Run `cat "$HOME/.cursor/mcp.json"` to verify the content
+- Make sure the JSON is valid (no trailing commas, proper brackets)
 
-**Tool not working?**
-- Check that npm install was completed
-- Look for error messages in the MCP panel
+**"Permission denied" error?**
+- The file might be owned by a different user
+- Try: `chmod 644 "$HOME/.cursor/mcp.json"`
+
+**Tool not working after restart?**
+- Check the absolute path is correct
+- Make sure `npm install` was completed in your project
+- Look for error indicators next to your server in Cursor's MCP panel
 
 ## Next Step
 
 Once your greet tool works, continue to [05-build-real-tools](../05-build-real-tools/NON-ENGINEER.md) to build more useful tools!
-

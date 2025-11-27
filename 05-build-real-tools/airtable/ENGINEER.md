@@ -242,7 +242,10 @@ Add to your Cursor MCP settings with environment variables:
   "mcpServers": {
     "airtable": {
       "command": "npx",
-      "args": ["-y", "ts-node", "--esm", "/path/to/airtable-mcp/src/index.ts"],
+      "args": [
+        "--registry", "https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual",
+        "-y", "ts-node", "--esm", "/path/to/airtable-mcp/src/index.ts"
+      ],
       "env": {
         "AIRTABLE_PAT": "pat_your_actual_token_here",
         "AIRTABLE_BASE_ID": "appYourBaseId",
@@ -267,4 +270,3 @@ Ideas for more tools:
 - `delete-record` - Delete a record
 - `search-records` - Filter records by field value
 - `list-tables` - List all tables in the base
-

@@ -22,17 +22,41 @@ cd
 
 Your full path is: `C:\Users\alice\projects\my-mcp-server\src\index.ts`
 
-## Step 2: Open Cursor Settings
+## Step 2: Edit the MCP Config File
 
-1. Open Cursor
-2. Go to **Cursor Settings** (not VS Code settings)
-   - macOS: `Cmd + Shift + J` → Click gear icon → Cursor Settings
-   - Windows/Linux: `Ctrl + Shift + J` → Click gear icon → Cursor Settings
-3. Navigate to **Features** → **MCP Servers**
+The Cursor MCP configuration is stored in a JSON file.
+
+Find your config path:
+```bash
+echo "$HOME/.cursor/mcp.json"
+```
+
+| OS | Config File Path |
+|----|------------------|
+| macOS | `/Users/{username}/.cursor/mcp.json` |
+| Windows | `C:\Users\{username}\.cursor\mcp.json` |
+| Linux | `/home/{username}/.cursor/mcp.json` |
+
+Open the file directly:
+
+**macOS/Linux:**
+```bash
+# Create if it doesn't exist
+mkdir -p "$HOME/.cursor"
+touch "$HOME/.cursor/mcp.json"
+
+# Open in your editor
+code "$HOME/.cursor/mcp.json"
+# or: nano "$HOME/.cursor/mcp.json"
+```
+
+**Windows (PowerShell):**
+```powershell
+# Open in editor
+code "$env:USERPROFILE\.cursor\mcp.json"
+```
 
 ## Step 3: Add Your Server
-
-Click **"Add new MCP server"** or edit the JSON configuration directly.
 
 Add this configuration (replace the path with your actual path):
 
@@ -41,7 +65,10 @@ Add this configuration (replace the path with your actual path):
   "mcpServers": {
     "my-mcp-server": {
       "command": "npx",
-      "args": ["-y", "ts-node", "--esm", "/Users/alice/projects/my-mcp-server/src/index.ts"]
+      "args": [
+        "--registry", "https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual",
+        "-y", "ts-node", "--esm", "/Users/alice/projects/my-mcp-server/src/index.ts"
+      ]
     }
   }
 }
@@ -98,11 +125,11 @@ Cursor should call your `greet` tool and return:
 
 Use forward slashes or escaped backslashes:
 ```json
-"args": ["-y", "ts-node", "--esm", "C:/Users/alice/projects/my-mcp-server/src/index.ts"]
+"args": ["--registry", "https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual", "-y", "ts-node", "--esm", "C:/Users/alice/projects/my-mcp-server/src/index.ts"]
 ```
 or
 ```json
-"args": ["-y", "ts-node", "--esm", "C:\\Users\\alice\\projects\\my-mcp-server\\src\\index.ts"]
+"args": ["--registry", "https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual", "-y", "ts-node", "--esm", "C:\\Users\\alice\\projects\\my-mcp-server\\src\\index.ts"]
 ```
 
 ## Example Configuration File
@@ -112,4 +139,3 @@ See [cursor-config-example.json](./cursor-config-example.json) for a complete ex
 ## Next Step
 
 Continue to [05-build-real-tools](../05-build-real-tools/ENGINEER.md) to build more useful tools.
-

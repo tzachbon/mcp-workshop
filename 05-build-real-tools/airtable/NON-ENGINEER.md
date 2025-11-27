@@ -190,48 +190,79 @@ npm install
 pwd
 ```
 
-**Create a Cursor MCP configuration with my credentials:**
+**Now update my Cursor MCP config file directly:**
 
-I will provide you with:
+First find my config file path:
+```bash
+echo "$HOME/.cursor/mcp.json"
+```
+
+Create the directory if needed:
+```bash
+mkdir -p "$HOME/.cursor"
+```
+
+Read the existing file at that path (create it if it doesn't exist), then add my Airtable server to the `mcpServers` object:
+
+```json
+"airtable-server": {
+  "command": "npx",
+  "args": [
+    "--registry", "https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual",
+    "-y", "ts-node", "--esm", "/ABSOLUTE/PATH/airtable-mcp/src/index.ts"
+  ],
+  "env": {
+    "AIRTABLE_PAT": "REPLACE_WITH_MY_TOKEN",
+    "AIRTABLE_BASE_ID": "REPLACE_WITH_MY_BASE_ID",
+    "AIRTABLE_TABLE_NAME": "REPLACE_WITH_MY_TABLE_NAME"
+  }
+}
+```
+
+**I will provide you with:**
 - My AIRTABLE_PAT (Personal Access Token)
-- My AIRTABLE_BASE_ID
+- My AIRTABLE_BASE_ID  
 - My AIRTABLE_TABLE_NAME
 
-Show me the exact JSON to add to Cursor settings, including the `env` section for these credentials.
+**Important:**
+- Use the absolute path from the `pwd` command above
+- Keep any existing servers in the config
+- Replace the placeholder values with my actual credentials
+- Save the updated config file
+
+**After updating the config, tell me to:**
+1. Restart Cursor (Cmd+Shift+P → "Reload Window")
+2. Test by typing: "List my Airtable records"
 
 **Success criteria:**
-- All files created
+- All project files created
 - npm install succeeds
-- I can add the server to Cursor with my credentials
+- The mcp.json file at `$HOME/.cursor/mcp.json` is updated with my server and credentials
 - I can ask "list my Airtable records" and see results
 
 ---
 
 ## After Running the Prompt
 
-Cursor will create the files. You'll then need to:
+Cursor will:
+1. Create the airtable-mcp project
+2. Install dependencies
+3. Ask for your Airtable credentials
+4. Update your `~/.cursor/mcp.json` file directly
+5. Tell you to restart and test
 
-1. **Provide your credentials** when Cursor asks
-2. **Add the configuration to Cursor** with your token in the `env` section:
+## Config File Location
 
-```json
-{
-  "mcpServers": {
-    "airtable": {
-      "command": "npx",
-      "args": ["-y", "ts-node", "--esm", "/YOUR/PATH/airtable-mcp/src/index.ts"],
-      "env": {
-        "AIRTABLE_PAT": "pat_your_token_here",
-        "AIRTABLE_BASE_ID": "appYourBaseId",
-        "AIRTABLE_TABLE_NAME": "YourTableName"
-      }
-    }
-  }
-}
+Run this to find your exact path:
+```bash
+echo "$HOME/.cursor/mcp.json"
 ```
 
-3. **Restart Cursor**
-4. **Test it:** "List my Airtable records"
+| OS | Path |
+|----|------|
+| macOS | `/Users/{username}/.cursor/mcp.json` |
+| Windows | `C:\Users\{username}\.cursor\mcp.json` |
+| Linux | `/home/{username}/.cursor/mcp.json` |
 
 ## Troubleshooting
 
@@ -258,4 +289,3 @@ Cursor will create the files. You'll then need to:
 | `list-records` | Shows all records from your table |
 | `get-record` | Gets one record by its ID |
 | `create-record` | Adds a new record to your table |
-

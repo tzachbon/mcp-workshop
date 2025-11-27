@@ -27,3 +27,4 @@ If both show version numbers, you're ready. Continue to [02-mcp-basics](../02-mc
 
 If not, follow the instructions in your track's guide.
 
+
