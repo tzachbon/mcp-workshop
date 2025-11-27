@@ -13,6 +13,25 @@ cd my-mcp-server
 npm init -y
 ```
 
+## Configure npm Registry (Autodesk)
+
+Create a `.npmrc` file to use the Autodesk npm registry:
+
+```bash
+echo "registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual" > .npmrc
+```
+
+## Create .gitignore
+
+```bash
+cat > .gitignore << EOF
+node_modules/
+dist/
+.env
+*.log
+EOF
+```
+
 ## Install Dependencies
 
 ```bash
@@ -125,6 +144,8 @@ Your project structure should now be:
 
 ```
 my-mcp-server/
+├── .gitignore
+├── .npmrc
 ├── node_modules/
 ├── package.json
 ├── package-lock.json
@@ -136,4 +157,3 @@ my-mcp-server/
 ## Next Step
 
 Continue to [03-create-server](../03-create-server/ENGINEER.md) to add tools to your server.
-

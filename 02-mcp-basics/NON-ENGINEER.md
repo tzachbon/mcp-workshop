@@ -17,10 +17,25 @@ Copy and paste this entire prompt into Cursor:
 **Required structure:**
 ```
 my-mcp-server/
+├── .npmrc
+├── .gitignore
 ├── package.json
 ├── tsconfig.json
 └── src/
     └── index.ts
+```
+
+**.npmrc must contain:**
+```
+registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual
+```
+
+**.gitignore must contain:**
+```
+node_modules/
+dist/
+.env
+*.log
 ```
 
 **package.json must contain:**
@@ -86,7 +101,7 @@ npm install
 ```
 
 **Success criteria:**
-- All three files are created
+- All five files are created (.npmrc, .gitignore, package.json, tsconfig.json, src/index.ts)
 - `npm install` completes without errors
 - The `node_modules` folder is created
 
@@ -117,6 +132,8 @@ After running this prompt, Cursor will:
 
 | File | Purpose |
 |------|---------|
+| `.npmrc` | Points npm to the Autodesk registry |
+| `.gitignore` | Excludes node_modules and secrets from git |
 | `package.json` | Lists dependencies and scripts |
 | `tsconfig.json` | Configures TypeScript |
 | `src/index.ts` | Your server code (currently empty) |
@@ -124,4 +141,3 @@ After running this prompt, Cursor will:
 ## Next Step
 
 Continue to [03-create-server](../03-create-server/NON-ENGINEER.md) to add your first tool.
-
