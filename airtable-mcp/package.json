@@ -1,9 +1,7 @@
 {
-  "name": "hello-world-mcp",
+  "name": "airtable-mcp",
   "version": "1.0.0",
-  "description": "Simple greeting MCP server",
   "type": "module",
-  "main": "src/index.ts",
   "scripts": {
     "start": "npx -y ts-node --esm src/index.ts"
   },
@@ -17,6 +15,4 @@
     "typescript": "^5.3.0"
   }
 }
-
-
 

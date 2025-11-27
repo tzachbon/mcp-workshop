@@ -23,15 +23,14 @@ You need:
 6. Click **Create token**
 7. **Copy the token** (starts with `pat_`) - save it somewhere safe!
 
-### Step 2: Get Your Base ID
+### Step 2: Get Your Base ID and Table ID
 
 1. Open your base in Airtable
-2. Look at the URL: `https://airtable.com/appXXXXXXXXXXXXX/...`
-3. Copy the part starting with `app` (that's your Base ID)
+2. Look at the URL: `https://airtable.com/appXXXXXXXXXXXXX/tblYYYYYYYYYYYYYYY/viwZZZZZZZZZZZZZZZ`
+3. **Base ID**: The part starting with `app` (e.g., `appThsjff4YKo6BSm`)
+4. **Table ID**: The part starting with `tbl` (e.g., `tblOhmJW6zEVwGWiW`)
 
-### Step 3: Know Your Table Name
-
-The exact name of the table you want to use (e.g., "Tasks", "Contacts")
+**Note:** You can use either the table ID (starts with `tbl`) or the table name (e.g., "Tasks", "Contacts") in `AIRTABLE_TABLE_NAME`. Using the table ID is more reliable.
 
 ## Prompt
 
@@ -234,13 +233,15 @@ Read the existing file at that path (create it if it doesn't exist), then add my
 
 **I will provide you with:**
 - My AIRTABLE_PAT (Personal Access Token)
-- My AIRTABLE_BASE_ID  
-- My AIRTABLE_TABLE_NAME
+- My AIRTABLE_BASE_ID (starts with `app`)
+- My AIRTABLE_TABLE_NAME (can be table ID starting with `tbl` or the table name)
 
 **Important:**
 - Use the absolute path from the `pwd` command above
 - Keep any existing servers in the config
 - Replace the placeholder values with my actual credentials
+- **Base ID** must start with `app` (from URL: `https://airtable.com/appXXXXXXXXXXXXX/...`)
+- **Table Name** can be the table ID (starts with `tbl`) or the actual table name
 - Save the updated config file
 
 **After updating the config, tell me to:**
@@ -288,8 +289,10 @@ echo "$HOME/.cursor/mcp.json"
 - Make sure you added your base to the token's access list
 
 **"TABLE_NOT_FOUND" error?**
-- Check the exact table name (case-sensitive)
+- Check the exact table name (case-sensitive) or use the table ID instead
+- Table ID starts with `tbl` and can be found in the URL: `https://airtable.com/app.../tbl.../...`
 - Update `AIRTABLE_TABLE_NAME` in your Cursor config
+- Make sure `AIRTABLE_BASE_ID` starts with `app` (not `tbl`)
 
 **Records not showing?**
 - Make sure your table has data

@@ -33,3 +33,4 @@ npx -y ts-node --esm src/index.ts
 3. Follow the workshop guide to connect to Cursor
 
 
+

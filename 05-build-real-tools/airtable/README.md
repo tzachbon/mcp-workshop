@@ -31,11 +31,14 @@ Three tools:
 
 More details: [Airtable PAT Documentation](https://support.airtable.com/docs/creating-personal-access-tokens)
 
-## Step 2: Find Your Base ID
+## Step 2: Find Your Base ID and Table ID
 
 1. Open your Airtable base in the browser
-2. Look at the URL: `https://airtable.com/appXXXXXXXXXXXXX/...`
-3. The base ID is the part starting with `app` (e.g., `appXXXXXXXXXXXXX`)
+2. Look at the URL: `https://airtable.com/appXXXXXXXXXXXXX/tblYYYYYYYYYYYYYYY/viwZZZZZZZZZZZZZZZ`
+3. **Base ID**: The part starting with `app` (e.g., `appThsjff4YKo6BSm`)
+4. **Table ID**: The part starting with `tbl` (e.g., `tblOhmJW6zEVwGWiW`)
+
+**Note:** You can use either the table ID (starts with `tbl`) or the table name (e.g., "Tasks") in your configuration. Using the table ID is more reliable.
 
 ## Choose Your Track
 

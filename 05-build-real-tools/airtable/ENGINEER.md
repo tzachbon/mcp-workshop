@@ -268,12 +268,19 @@ Add to your Cursor MCP settings with environment variables:
       "env": {
         "AIRTABLE_PAT": "pat_your_actual_token_here",
         "AIRTABLE_BASE_ID": "appYourBaseId",
-        "AIRTABLE_TABLE_NAME": "Tasks"
+        "AIRTABLE_TABLE_NAME": "tblYourTableId"
       }
     }
   }
 }
 ```
+
+**Finding your IDs:**
+- Open your Airtable base in the browser
+- URL format: `https://airtable.com/app{baseId}/tbl{tableId}/viw{viewId}`
+- **Base ID**: Starts with `app` (e.g., `appThsjff4YKo6BSm`)
+- **Table ID**: Starts with `tbl` (e.g., `tblOhmJW6zEVwGWiW`)
+- You can use either the table ID or the table name for `AIRTABLE_TABLE_NAME`, but the table ID is more reliable
 
 ## Test It
 
