@@ -155,6 +155,3 @@ server.registerTool(
 ## Next Step
 
 Continue to [04-connect-to-cursor](../04-connect-to-cursor/ENGINEER.md) to connect your server to Cursor.
-
-
-

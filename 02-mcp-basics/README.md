@@ -46,6 +46,3 @@ npm install
 ## Next Step
 
 After setting up the project, continue to [03-create-server](../03-create-server/)
-
-
-

@@ -30,6 +30,3 @@ const server = new McpServer({
 // Connect via stdio (required for Cursor)
 const transport = new StdioServerTransport();
 await server.connect(transport);
-
-
-
