@@ -120,4 +120,4 @@ After running this prompt, Cursor will:
 
 ## Next Step
 
-Once Node.js is installed and npm is authenticated, continue to [02-mcp-basics](../02-mcp-basics/NON-ENGINEER.md)
+Once Node.js is installed and npm is authenticated, continue to [02-mcp-basics](../02-mcp-basics/NON-ENGINEER)

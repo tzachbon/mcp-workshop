@@ -148,4 +148,4 @@ If you had other servers already, they'll still be there:
 
 ## Next Step
 
-Once your greet tool works, continue to [05-build-real-tools](../05-build-real-tools/NON-ENGINEER.md) to build more useful tools!
+Once your greet tool works, continue to [05-build-real-tools](../05-build-real-tools/airtable/NON-ENGINEER) to build more useful tools!

@@ -21,8 +21,8 @@ Build an MCP server that interacts with Airtable:
 
 ## Choose Your Track
 
-- **Engineers**: Follow [airtable/ENGINEER.md](./airtable/ENGINEER.md) for step-by-step implementation
-- **Non-Engineers**: Follow [airtable/NON-ENGINEER.md](./airtable/NON-ENGINEER.md) for a ready-to-use prompt
+- **Engineers**: Follow [airtable/ENGINEER](./airtable/ENGINEER) for step-by-step implementation
+- **Non-Engineers**: Follow [airtable/NON-ENGINEER](./airtable/NON-ENGINEER) for a ready-to-use prompt
 
 ## What You'll Learn
 

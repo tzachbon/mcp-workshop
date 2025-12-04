@@ -31,8 +31,8 @@ my-mcp-server/
 
 ## Choose Your Track
 
-- **Engineers**: Follow [ENGINEER.md](./ENGINEER.md) for manual setup with explanations
-- **Non-Engineers**: Follow [NON-ENGINEER.md](./NON-ENGINEER.md) for a Cursor prompt that creates everything
+- **Engineers**: Follow [ENGINEER](./ENGINEER) for manual setup with explanations
+- **Non-Engineers**: Follow [NON-ENGINEER](./NON-ENGINEER) for a Cursor prompt that creates everything
 
 ## Quick Start
 

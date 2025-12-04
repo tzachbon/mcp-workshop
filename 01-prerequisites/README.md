@@ -11,8 +11,8 @@ Before building your MCP server, you need Node.js installed and npm authenticate
 
 ## Choose Your Track
 
-- **Engineers**: Follow [ENGINEER.md](./ENGINEER.md) for step-by-step installation
-- **Non-Engineers**: Follow [NON-ENGINEER.md](./NON-ENGINEER.md) for a Cursor prompt that checks and guides you
+- **Engineers**: Follow [ENGINEER](./ENGINEER) for step-by-step installation
+- **Non-Engineers**: Follow [NON-ENGINEER](./NON-ENGINEER) for a Cursor prompt that checks and guides you
 
 ## Quick Check
 

@@ -33,8 +33,8 @@ Example:
 
 ## Choose Your Track
 
-- **Engineers**: Follow [ENGINEER.md](./ENGINEER.md) for manual configuration
-- **Non-Engineers**: Follow [NON-ENGINEER.md](./NON-ENGINEER.md) for a Cursor prompt that helps you configure
+- **Engineers**: Follow [ENGINEER](./ENGINEER) for manual configuration
+- **Non-Engineers**: Follow [NON-ENGINEER](./NON-ENGINEER) for a Cursor prompt that helps you configure
 
 ## Configuration Preview
 

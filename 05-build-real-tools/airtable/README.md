@@ -42,8 +42,8 @@ More details: [Airtable PAT Documentation](https://support.airtable.com/docs/cre
 
 ## Choose Your Track
 
-- **Engineers**: Follow [ENGINEER.md](./ENGINEER.md) for step-by-step implementation
-- **Non-Engineers**: Follow [NON-ENGINEER.md](./NON-ENGINEER.md) for a ready-to-use prompt
+- **Engineers**: Follow [ENGINEER](./ENGINEER) for step-by-step implementation
+- **Non-Engineers**: Follow [NON-ENGINEER](./NON-ENGINEER) for a ready-to-use prompt
 
 ## Security Note
 

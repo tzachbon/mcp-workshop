@@ -30,8 +30,8 @@ server.registerTool(
 
 ## Choose Your Track
 
-- **Engineers**: Follow [ENGINEER.md](./ENGINEER.md) for detailed explanations
-- **Non-Engineers**: Follow [NON-ENGINEER.md](./NON-ENGINEER.md) for a ready-to-use prompt
+- **Engineers**: Follow [ENGINEER](./ENGINEER) for detailed explanations
+- **Non-Engineers**: Follow [NON-ENGINEER](./NON-ENGINEER) for a ready-to-use prompt
 
 ## The Tool We'll Build
 
@@ -46,4 +46,3 @@ Example:
 ## Next Step
 
 After creating the tool, continue to [04-connect-to-cursor](../04-connect-to-cursor/) to test it in Cursor.
-
