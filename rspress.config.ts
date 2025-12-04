@@ -7,7 +7,13 @@ export default defineConfig({
   base: isProd ? '/mcp-workshop/' : '/',
   title: 'MCP Workshop',
   description: 'Build your first Model Context Protocol server and connect it to Cursor',
+  markdown: {
+    defaultWrapCode: true,
+    showLineNumbers: true,
+  },
   themeConfig: {
+    outline: true,
+    outlineTitle: 'On this page',
     socialLinks: [
       {
         icon: 'github',

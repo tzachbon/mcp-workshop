@@ -12,7 +12,7 @@ Now that Node.js is installed, let's set up an MCP server project.
 
 A minimal MCP server looks like this:
 
-```
+```txt
 my-mcp-server/
 ├── package.json        # Dependencies and scripts
 ├── tsconfig.json       # TypeScript configuration
@@ -46,4 +46,3 @@ npm install
 ## Next Step
 
 After setting up the project, continue to [03-create-server](../03-create-server/)
-

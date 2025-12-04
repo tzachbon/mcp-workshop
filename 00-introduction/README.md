@@ -10,7 +10,7 @@ Think of it like this:
 
 ## How MCP Works
 
-```
+```txt
 ┌─────────────┐         ┌─────────────┐         ┌─────────────┐
 │   Cursor    │ ◄─────► │ MCP Server  │ ◄─────► │  External   │
 │  (Client)   │   MCP   │ (Your Code) │  HTTP   │    APIs     │

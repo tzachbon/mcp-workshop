@@ -15,7 +15,7 @@ Build an MCP server that connects to Airtable by having Cursor generate the impl
 
 Use this prompt to have Cursor generate the MCP server from the API docs:
 
-```
+```text
 Generate an Airtable MCP server from the official API documentation.
 
 Read these Airtable API docs:
@@ -52,7 +52,7 @@ Cursor should infer schemas from the API docs:
 
 ### Dynamic Field Handling
 Airtable tables have user-defined fields, so expect:
-```typescript
+```ts
 fields: z.record(z.any())
 ```
 
@@ -96,7 +96,7 @@ After reloading Cursor:
 
 To add more endpoints, just point Cursor at more docs:
 
-```
+```text
 Add an update-record tool to my Airtable MCP server.
 
 Use this API endpoint: https://airtable.com/developers/web/api/update-record

@@ -142,7 +142,7 @@ await server.connect(transport);
 
 Your project structure should now be:
 
-```
+```txt
 my-mcp-server/
 ├── .gitignore
 ├── .npmrc

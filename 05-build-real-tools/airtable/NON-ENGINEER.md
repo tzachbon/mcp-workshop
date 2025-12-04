@@ -34,7 +34,7 @@ You need:
 
 Copy and paste this prompt into Cursor:
 
-```
+```text
 Create an Airtable MCP server by reading the official API documentation.
 
 Use the Airtable Web API docs to understand the API:
@@ -106,7 +106,7 @@ This demonstrates the real power of AI coding: you point it at documentation, it
 
 Want more Airtable capabilities? Just point Cursor at more API docs:
 
-```
+```text
 Add a new tool to my Airtable MCP server.
 
 Use this API endpoint: https://airtable.com/developers/web/api/update-record

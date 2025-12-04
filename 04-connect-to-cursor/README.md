@@ -10,7 +10,7 @@ Now that your MCP server has a tool, let's connect it to Cursor so you can use i
 
 ## How It Works
 
-```
+```txt
 ┌─────────────┐    spawns     ┌─────────────┐
 │   Cursor    │ ───────────►  │ Your Server │
 │             │    stdin      │  (ts-node)  │
@@ -52,4 +52,3 @@ Example:
 ## Next Step
 
 After connecting to Cursor, continue to [05-build-real-tools](../05-build-real-tools/) to build more useful tools.
-
