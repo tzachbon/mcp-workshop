@@ -1,260 +1,67 @@
 # Airtable MCP Server (Engineer Track)
 
-## Setup
+## Goal
 
-```bash
-mkdir airtable-mcp
-cd airtable-mcp
-npm init -y
+Build an MCP server that connects to Airtable by having Cursor generate the implementation from the official API documentation.
+
+## Prerequisites
+
+- Airtable account with a base containing data
+- Personal Access Token from [airtable.com/create/tokens](https://airtable.com/create/tokens)
+  - Scopes: `data.records:read`, `data.records:write`
+  - Access: Your target base
+
+## Prompt
+
+Use this prompt to have Cursor generate the MCP server from the API docs:
+
+```
+Generate an Airtable MCP server from the official API documentation.
+
+Read these Airtable API docs:
+- List records: https://airtable.com/developers/web/api/list-records
+- Get record: https://airtable.com/developers/web/api/get-record
+- Create records: https://airtable.com/developers/web/api/create-records
+
+Reference @starter-template/src/index.ts for MCP SDK patterns.
+
+Requirements:
+1. Generate a tool for each endpoint based on the API docs
+2. Derive zod schemas from the documented request/response shapes
+3. Environment variables: AIRTABLE_PAT, AIRTABLE_BASE_ID, AIRTABLE_TABLE_NAME
+4. Fail fast on missing credentials at startup
+5. Return structured output with both content and structuredContent
+
+Project location: airtable-mcp/
+
+After generating, update ~/.cursor/mcp.json with the server config.
 ```
 
-Create `.npmrc` for Autodesk registry:
-```bash
-echo "registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual" > .npmrc
-```
+## What to Verify
 
-Create `.gitignore`:
-```bash
-cat > .gitignore << EOF
-node_modules/
-dist/
-.env
-*.log
-EOF
-```
+When Cursor generates the code, check:
 
-Install dependencies:
-```bash
-npm install @modelcontextprotocol/sdk zod
-npm install -D typescript ts-node @types/node
-```
+### Environment Variable Handling
+Credentials from env vars, fail-fast validation at startup.
 
-Update `package.json`:
-```json
-{
-  "type": "module",
-  "scripts": {
-    "start": "npx -y ts-node --esm src/index.ts"
-  }
-}
-```
+### Schema Derivation
+Cursor should infer schemas from the API docs:
+- Query params like `maxRecords`, `view`, `filterByFormula`
+- Request body structure for create operations
+- Response shapes with `id`, `fields`, `createdTime`
 
-Create `tsconfig.json`:
-```json
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
-    "strict": true,
-    "skipLibCheck": true
-  }
-}
-```
-
-## Implementation
-
-Create `src/index.ts`:
-
-```typescript
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { z } from 'zod';
-
-// Environment variables (set in Cursor MCP config)
-const AIRTABLE_PAT = process.env.AIRTABLE_PAT;
-const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
-const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME || 'Tasks';
-
-if (!AIRTABLE_PAT || !AIRTABLE_BASE_ID) {
-    console.error('Missing required environment variables: AIRTABLE_PAT and AIRTABLE_BASE_ID');
-    process.exit(1);
-}
-
-const server = new McpServer({
-    name: 'airtable-server',
-    version: '1.0.0'
-});
-
-// Base URL and headers for all requests
-const baseUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
-const headers = {
-    'Authorization': `Bearer ${AIRTABLE_PAT}`,
-    'Content-Type': 'application/json'
-};
-
-// Tool 1: List records
-server.registerTool(
-    'list-records',
-    {
-        title: 'List Records',
-        description: 'List all records from the Airtable table',
-        inputSchema: {
-            maxRecords: z.number().optional().describe('Maximum records to return (default: 100)')
-        },
-        outputSchema: {
-            records: z.array(z.object({
-                id: z.string(),
-                fields: z.record(z.any())
-            })),
-            count: z.number()
-        }
-    },
-    async ({ maxRecords = 100 }) => {
-        const response = await fetch(`${baseUrl}?maxRecords=${maxRecords}`, { headers });
-        
-        if (!response.ok) {
-            const error = await response.text();
-            return {
-                content: [{ type: 'text', text: `Airtable error: ${error}` }],
-                isError: true
-            };
-        }
-
-        const data = await response.json();
-        
-        const output = {
-            records: data.records.map((r: any) => ({ id: r.id, fields: r.fields })),
-            count: data.records.length
-        };
-
-        return {
-            content: [{ type: 'text', text: JSON.stringify(output, null, 2) }],
-            structuredContent: output
-        };
-    }
-);
-
-// Tool 2: Get single record
-server.registerTool(
-    'get-record',
-    {
-        title: 'Get Record',
-        description: 'Get a single record by its Airtable ID',
-        inputSchema: {
-            recordId: z.string().describe('The record ID (starts with "rec")')
-        },
-        outputSchema: {
-            id: z.string(),
-            fields: z.record(z.any())
-        }
-    },
-    async ({ recordId }) => {
-        const response = await fetch(`${baseUrl}/${recordId}`, { headers });
-        
-        if (!response.ok) {
-            const error = await response.text();
-            return {
-                content: [{ type: 'text', text: `Airtable error: ${error}` }],
-                isError: true
-            };
-        }
-
-        const data = await response.json();
-        
-        const output = {
-            id: data.id,
-            fields: data.fields
-        };
-
-        return {
-            content: [{ type: 'text', text: JSON.stringify(output, null, 2) }],
-            structuredContent: output
-        };
-    }
-);
-
-// Tool 3: Create record
-server.registerTool(
-    'create-record',
-    {
-        title: 'Create Record',
-        description: 'Create a new record in the Airtable table',
-        inputSchema: {
-            fields: z.record(z.any()).describe('Object with field names and values')
-        },
-        outputSchema: {
-            id: z.string(),
-            fields: z.record(z.any())
-        }
-    },
-    async ({ fields }) => {
-        const response = await fetch(baseUrl, {
-            method: 'POST',
-            headers,
-            body: JSON.stringify({ fields })
-        });
-        
-        if (!response.ok) {
-            const error = await response.text();
-            return {
-                content: [{ type: 'text', text: `Airtable error: ${error}` }],
-                isError: true
-            };
-        }
-
-        const data = await response.json();
-        
-        const output = {
-            id: data.id,
-            fields: data.fields
-        };
-
-        return {
-            content: [{ type: 'text', text: `Created: ${JSON.stringify(output, null, 2)}` }],
-            structuredContent: output
-        };
-    }
-);
-
-const transport = new StdioServerTransport();
-await server.connect(transport);
-```
-
-## Key Concepts
-
-### Reading Environment Variables
-
-```typescript
-const AIRTABLE_PAT = process.env.AIRTABLE_PAT;
-```
-
-Environment variables are passed from Cursor's MCP config. Never hardcode API keys!
-
-### Validation at Startup
-
-```typescript
-if (!AIRTABLE_PAT || !AIRTABLE_BASE_ID) {
-    console.error('Missing required environment variables');
-    process.exit(1);
-}
-```
-
-Fail fast if required config is missing.
-
-### Authorization Header
-
-```typescript
-const headers = {
-    'Authorization': `Bearer ${AIRTABLE_PAT}`,
-    'Content-Type': 'application/json'
-};
-```
-
-Airtable uses Bearer token authentication.
-
-### Dynamic Field Schemas
-
+### Dynamic Field Handling
+Airtable tables have user-defined fields, so expect:
 ```typescript
 fields: z.record(z.any())
 ```
 
-Since Airtable tables have user-defined fields, we use `z.record(z.any())` to accept any field structure.
+### Auth Header
+Bearer token from the PAT.
 
 ## Cursor Configuration
 
-Add to your Cursor MCP settings with environment variables:
+The generated config should look like:
 
 ```json
 {
@@ -266,7 +73,7 @@ Add to your Cursor MCP settings with environment variables:
         "-y", "ts-node", "--esm", "/path/to/airtable-mcp/src/index.ts"
       ],
       "env": {
-        "AIRTABLE_PAT": "pat_your_actual_token_here",
+        "AIRTABLE_PAT": "pat_your_token",
         "AIRTABLE_BASE_ID": "appYourBaseId",
         "AIRTABLE_TABLE_NAME": "tblYourTableId"
       }
@@ -275,37 +82,38 @@ Add to your Cursor MCP settings with environment variables:
 }
 ```
 
-**Finding your IDs:**
-- Open your Airtable base in the browser
-- URL format: `https://airtable.com/app{baseId}/tbl{tableId}/viw{viewId}`
-- **Base ID**: Starts with `app` (e.g., `appThsjff4YKo6BSm`)
-- **Table ID**: Starts with `tbl` (e.g., `tblOhmJW6zEVwGWiW`)
-- You can use either the table ID or the table name for `AIRTABLE_TABLE_NAME`, but the table ID is more reliable
+**Finding your IDs from the URL:**
+`https://airtable.com/app{baseId}/tbl{tableId}/viw{viewId}`
 
 ## Test It
 
-In Cursor chat:
+After reloading Cursor:
 - "List all records from my Airtable"
 - "Create a new task called 'Learn MCP'"
 - "Get the record with ID recXXXXXX"
 
-## Extend It
+## Extending the Server
 
-Ideas for more tools:
-- `update-record` - Update an existing record
-- `delete-record` - Delete a record
-- `search-records` - Filter records by field value
-- `list-tables` - List all tables in the base
+To add more endpoints, just point Cursor at more docs:
 
-## What's Next?
+```
+Add an update-record tool to my Airtable MCP server.
 
-You've built a basic Airtable MCP server. Want to add more capabilities?
+Use this API endpoint: https://airtable.com/developers/web/api/update-record
 
-**Use the Airtable API documentation to generate more tools:**
+Add to airtable-mcp/src/index.ts following the existing patterns.
+```
 
-1. Browse the full API reference: [Airtable Web API Documentation](https://airtable.com/developers/web/api/get-user-id-scopes)
-2. Find an endpoint you want to use (e.g., update record, delete record, list bases)
-3. Copy the API specification or describe the endpoint to Cursor
-4. Ask Cursor: *"Add a new tool to my Airtable MCP server based on this API spec"*
+Other endpoints to try:
+- Delete record: https://airtable.com/developers/web/api/delete-record
+- Update multiple records: https://airtable.com/developers/web/api/update-multiple-records
+- List bases: https://airtable.com/developers/web/api/list-bases
 
-Cursor can read API documentation and generate the corresponding MCP tool for you automatically. Just provide the endpoint details and it will create the tool with proper input/output schemas.
+## Key Concepts
+
+| Concept | What's Happening |
+|---------|------------------|
+| Doc-to-code generation | Cursor reads API docs and generates implementation |
+| Schema inference | Zod schemas derived from documented shapes |
+| Environment config | Credentials via MCP config `env` block |
+| Extensibility | Add tools by pointing at more doc URLs |

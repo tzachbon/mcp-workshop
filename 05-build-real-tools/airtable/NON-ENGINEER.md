@@ -2,7 +2,7 @@
 
 ## Goal
 
-Create an MCP server that can read and write to your Airtable base.
+Create an MCP server that can read and write to your Airtable base by having Cursor generate the code from the official API documentation.
 
 ## Before You Start
 
@@ -30,245 +30,56 @@ You need:
 3. **Base ID**: The part starting with `app` (e.g., `appThsjff4YKo6BSm`)
 4. **Table ID**: The part starting with `tbl` (e.g., `tblOhmJW6zEVwGWiW`)
 
-**Note:** You can use either the table ID (starts with `tbl`) or the table name (e.g., "Tasks", "Contacts") in `AIRTABLE_TABLE_NAME`. Using the table ID is more reliable.
-
 ## Prompt
 
-Copy and paste this entire prompt into Cursor:
+Copy and paste this prompt into Cursor:
 
-~~~
-Create a complete Airtable MCP server for me.
-
-Project location: Create in a new folder called `airtable-mcp` in my current workspace.
-
-Required files:
-
-1. .npmrc (for Autodesk npm registry):
 ```
-registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual
-```
+Create an Airtable MCP server by reading the official API documentation.
 
-2. .gitignore:
-```
-node_modules/
-dist/
-.env
-*.log
-```
+Use the Airtable Web API docs to understand the API:
+- List records: https://airtable.com/developers/web/api/list-records
+- Get record: https://airtable.com/developers/web/api/get-record
+- Create records: https://airtable.com/developers/web/api/create-records
 
-3. package.json:
-```json
-{
-  "name": "airtable-mcp",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "start": "npx -y ts-node --esm src/index.ts"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.0",
-    "zod": "^3.22.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.0.0",
-    "ts-node": "^10.9.0",
-    "typescript": "^5.3.0"
-  }
-}
+Generate an MCP server with tools for these three operations.
+
+Reference @starter-template/src/index.ts for the MCP SDK patterns.
+
+Project setup:
+- Create in a new folder called airtable-mcp in my current workspace
+- Environment variables for credentials: AIRTABLE_PAT, AIRTABLE_BASE_ID, AIRTABLE_TABLE_NAME
+- Use zod for input/output schemas based on what you learn from the API docs
+- Handle errors gracefully
+
+After creating the server:
+1. Run npm install
+2. Get my absolute path with pwd
+3. Update my Cursor MCP config at ~/.cursor/mcp.json with the server entry and placeholder credentials
+
+I will provide my Airtable credentials:
+- AIRTABLE_PAT (Personal Access Token starting with pat_)
+- AIRTABLE_BASE_ID (starts with app)
+- AIRTABLE_TABLE_NAME (table ID starting with tbl or the table name)
 ```
 
-4. tsconfig.json:
-```json
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
-    "strict": true,
-    "skipLibCheck": true
-  }
-}
-```
-
-5. src/index.ts:
-```typescript
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { z } from 'zod';
-
-const AIRTABLE_PAT = process.env.AIRTABLE_PAT;
-const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
-const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME || 'Tasks';
-
-if (!AIRTABLE_PAT || !AIRTABLE_BASE_ID) {
-    console.error('Missing required environment variables: AIRTABLE_PAT and AIRTABLE_BASE_ID');
-    process.exit(1);
-}
-
-const server = new McpServer({
-    name: 'airtable-server',
-    version: '1.0.0'
-});
-
-const baseUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
-const headers = {
-    'Authorization': `Bearer ${AIRTABLE_PAT}`,
-    'Content-Type': 'application/json'
-};
-
-server.registerTool(
-    'list-records',
-    {
-        title: 'List Records',
-        description: 'List all records from the Airtable table',
-        inputSchema: {
-            maxRecords: z.number().optional().describe('Maximum records to return')
-        },
-        outputSchema: {
-            records: z.array(z.object({ id: z.string(), fields: z.record(z.any()) })),
-            count: z.number()
-        }
-    },
-    async ({ maxRecords = 100 }) => {
-        const response = await fetch(`${baseUrl}?maxRecords=${maxRecords}`, { headers });
-        if (!response.ok) {
-            return { content: [{ type: 'text', text: `Error: ${await response.text()}` }], isError: true };
-        }
-        const data = await response.json();
-        const output = {
-            records: data.records.map((r: any) => ({ id: r.id, fields: r.fields })),
-            count: data.records.length
-        };
-        return { content: [{ type: 'text', text: JSON.stringify(output, null, 2) }], structuredContent: output };
-    }
-);
-
-server.registerTool(
-    'get-record',
-    {
-        title: 'Get Record',
-        description: 'Get a single record by ID',
-        inputSchema: { recordId: z.string().describe('The record ID (starts with "rec")') },
-        outputSchema: { id: z.string(), fields: z.record(z.any()) }
-    },
-    async ({ recordId }) => {
-        const response = await fetch(`${baseUrl}/${recordId}`, { headers });
-        if (!response.ok) {
-            return { content: [{ type: 'text', text: `Error: ${await response.text()}` }], isError: true };
-        }
-        const data = await response.json();
-        const output = { id: data.id, fields: data.fields };
-        return { content: [{ type: 'text', text: JSON.stringify(output, null, 2) }], structuredContent: output };
-    }
-);
-
-server.registerTool(
-    'create-record',
-    {
-        title: 'Create Record',
-        description: 'Create a new record',
-        inputSchema: { fields: z.record(z.any()).describe('Object with field names and values') },
-        outputSchema: { id: z.string(), fields: z.record(z.any()) }
-    },
-    async ({ fields }) => {
-        const response = await fetch(baseUrl, {
-            method: 'POST',
-            headers,
-            body: JSON.stringify({ fields })
-        });
-        if (!response.ok) {
-            return { content: [{ type: 'text', text: `Error: ${await response.text()}` }], isError: true };
-        }
-        const data = await response.json();
-        const output = { id: data.id, fields: data.fields };
-        return { content: [{ type: 'text', text: `Created: ${JSON.stringify(output, null, 2)}` }], structuredContent: output };
-    }
-);
-
-const transport = new StdioServerTransport();
-await server.connect(transport);
-```
-
-After creating files, run:
-```bash
-cd airtable-mcp
-npm install
-```
-
-Then find my absolute path:
-```bash
-pwd
-```
-
-Now update my Cursor MCP config file directly:
-
-First find my config file path:
-```bash
-echo "$HOME/.cursor/mcp.json"
-```
-
-Create the directory if needed:
-```bash
-mkdir -p "$HOME/.cursor"
-```
-
-Read the existing file at that path (create it if it doesn't exist), then add my Airtable server to the mcpServers object:
-
-```json
-"airtable-server": {
-  "command": "npx",
-  "args": [
-    "--registry", "https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual",
-    "-y", "ts-node", "--esm", "/ABSOLUTE/PATH/airtable-mcp/src/index.ts"
-  ],
-  "env": {
-    "AIRTABLE_PAT": "REPLACE_WITH_MY_TOKEN",
-    "AIRTABLE_BASE_ID": "REPLACE_WITH_MY_BASE_ID",
-    "AIRTABLE_TABLE_NAME": "REPLACE_WITH_MY_TABLE_NAME"
-  }
-}
-```
-
-I will provide you with:
-- My AIRTABLE_PAT (Personal Access Token)
-- My AIRTABLE_BASE_ID (starts with app)
-- My AIRTABLE_TABLE_NAME (can be table ID starting with tbl or the table name)
-
-Important:
-- Use the absolute path from the pwd command above
-- Keep any existing servers in the config
-- Replace the placeholder values with my actual credentials
-- Base ID must start with app (from URL: https://airtable.com/appXXXXXXXXXXXXX/...)
-- Table Name can be the table ID (starts with tbl) or the actual table name
-- Save the updated config file
-
-After updating the config, tell me to:
-1. Restart Cursor (Cmd+Shift+P → "Reload Window")
-2. Test by typing: "List my Airtable records"
-
-Success criteria:
-- All project files created
-- npm install succeeds
-- The mcp.json file at $HOME/.cursor/mcp.json is updated with my server and credentials
-- I can ask "list my Airtable records" and see results
-~~~
-
-## After Running the Prompt
+## What Happens
 
 Cursor will:
-1. Create the airtable-mcp project
-2. Install dependencies
-3. Ask for your Airtable credentials
-4. Update your `~/.cursor/mcp.json` file directly
-5. Tell you to restart and test
+1. **Read the official Airtable API docs** to understand the endpoints
+2. **Generate the MCP server code** based on what it learns
+3. Create the project structure and install dependencies
+4. Update your Cursor config with the server
+
+This demonstrates the real power of AI coding: you point it at documentation, it generates working code.
+
+## After the Prompt
+
+1. Provide your Airtable credentials when asked
+2. Restart Cursor (Cmd+Shift+P → "Reload Window")
+3. Test by typing: "List my Airtable records"
 
 ## Config File Location
-
-Run this to find your exact path:
-```bash
-echo "$HOME/.cursor/mcp.json"
-```
 
 | OS | Path |
 |----|------|
@@ -288,41 +99,19 @@ echo "$HOME/.cursor/mcp.json"
 
 **"TABLE_NOT_FOUND" error?**
 - Check the exact table name (case-sensitive) or use the table ID instead
-- Table ID starts with `tbl` and can be found in the URL: `https://airtable.com/app.../tbl.../...`
+- Table ID starts with `tbl` and can be found in the URL
 - Update `AIRTABLE_TABLE_NAME` in your Cursor config
-- Make sure `AIRTABLE_BASE_ID` starts with `app` (not `tbl`)
-
-**Records not showing?**
-- Make sure your table has data
-- Try creating a record first: "Create a record with Name = Test"
-
-## What You Built
-
-| Tool | What it does |
-|------|--------------|
-| `list-records` | Shows all records from your table |
-| `get-record` | Gets one record by its ID |
-| `create-record` | Adds a new record to your table |
 
 ## What's Next?
 
-Want to add more Airtable capabilities? You can generate new tools from the API documentation!
+Want more Airtable capabilities? Just point Cursor at more API docs:
 
-**How to add more tools:**
+```
+Add a new tool to my Airtable MCP server.
 
-1. Go to the [Airtable Web API Documentation](https://airtable.com/developers/web/api/get-user-id-scopes)
-2. Find an endpoint you want (e.g., update record, delete record)
-3. Ask Cursor with this prompt:
+Use this API endpoint: https://airtable.com/developers/web/api/update-record
 
----
+Add it to my existing airtable-mcp/src/index.ts following the same patterns.
+```
 
-**Add a new tool to my Airtable MCP server.**
-
-Here's the API endpoint I want to use:
-[Paste the API documentation or describe the endpoint]
-
-Add it to my existing `airtable-mcp/src/index.ts` file following the same pattern as the other tools.
-
----
-
-Cursor can read API specifications and automatically generate MCP tools for you. Just show it what endpoint you want and it will create the tool with proper input/output schemas!
+Cursor reads the docs and generates the tool. That's it.
