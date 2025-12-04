@@ -1,7 +1,10 @@
 import { defineConfig } from 'rspress/config';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 export default defineConfig({
   root: 'docs',
+  base: isProd ? '/mcp-workshop/' : '/',
   title: 'MCP Workshop',
   description: 'Build your first Model Context Protocol server and connect it to Cursor',
   themeConfig: {
