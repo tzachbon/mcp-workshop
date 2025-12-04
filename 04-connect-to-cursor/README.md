@@ -52,3 +52,4 @@ Example:
 ## Next Step
 
 After connecting to Cursor, continue to [05-build-real-tools](../05-build-real-tools/) to build more useful tools.
+

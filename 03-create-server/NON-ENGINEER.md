@@ -92,3 +92,4 @@ After running this prompt, your server will have a `greet` tool that:
 ## Next Step
 
 Continue to [04-connect-to-cursor](../04-connect-to-cursor/NON-ENGINEER.md) to connect your server to Cursor.
+

@@ -46,3 +46,4 @@ Example:
 ## Next Step
 
 After creating the tool, continue to [04-connect-to-cursor](../04-connect-to-cursor/) to test it in Cursor.
+

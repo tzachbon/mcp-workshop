@@ -71,3 +71,4 @@ After running this prompt, Cursor will:
 ## Next Step
 
 Once Node.js is installed, continue to [02-mcp-basics](../02-mcp-basics/NON-ENGINEER.md)
+
