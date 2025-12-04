@@ -4,11 +4,35 @@
 
 Verify that Node.js is installed and npm is authenticated to the Autodesk registry.
 
+## Before You Start: NPM Authentication Setup
+
+Before running the prompt, you need to login to JFrog manually. This prevents "Token Generation Prohibited" errors.
+
+### Step 1: Connect to VPN
+
+Make sure you are connected to **GlobalProtect** VPN (the globe icon, not the key icon).
+
+### Step 2: Login to JFrog in Browser
+
+1. Navigate to [https://npm.autodesk.com/](https://npm.autodesk.com/)
+
+2. Click the **Log in** button in the top right corner:
+
+![JFrog Login](./imgs/jfrog-login.png)
+
+3. Click **SAML SSO** to login with your Autodesk credentials:
+
+![Login with SSO](./imgs/login-with-sso.png)
+
+Once logged in, you're ready to run the prompt below.
+
+---
+
 ## Prompt
 
 Copy and paste this entire prompt into Cursor:
 
-~~~
+```
 I need you to check if Node.js is installed on my system, help me install it if needed, and then authenticate npm with the Autodesk registry.
 
 Step 1: Check current installation
@@ -40,10 +64,12 @@ npm --version
 
 Step 5: Authenticate npm with Autodesk registry
 
-Run this command to authenticate (a browser window will open for SSO login):
+Run this command to authenticate:
 npm login --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/ --auth-type=web
 
-After completing the browser login, verify authentication:
+A URL will appear in the terminal. I need to Cmd+click (or Ctrl+click) the link to open it in my browser.
+
+After the browser shows success, verify authentication:
 npm whoami --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/
 
 If there's an auth config error, run:
@@ -53,7 +79,15 @@ Success criteria:
 - node --version shows v20.x.x or later
 - npm --version shows v10.x.x or later
 - npm whoami shows my Autodesk username
-~~~
+```
+
+## When Cursor Runs npm login
+
+When Cursor runs the `npm login` command, you'll see a URL in the terminal. **Cmd+click** (or Ctrl+click) the link:
+
+![NPM Login Terminal](./imgs/npm-login.png)
+
+Since you already logged into JFrog in the browser (Step 2 above), the authentication should complete automatically.
 
 ## Expected Outcome
 
@@ -65,6 +99,10 @@ After running this prompt, Cursor will:
 5. Verify everything is working
 
 ## Troubleshooting
+
+**"Token Generation Prohibited" error?**
+- Go back to "Before You Start" section and complete Steps 1-2 (login to JFrog in browser first)
+- Then try the npm login command again
 
 **Cursor can't run terminal commands?**
 - Make sure you're in a Cursor workspace (not just a single file)

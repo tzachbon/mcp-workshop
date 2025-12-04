@@ -83,7 +83,23 @@ source ~/.bashrc
 
 Autodesk blocks anonymous npm access. You must authenticate before running `npm install`.
 
-### Step 1: Authenticate
+### Step 1: Connect to VPN
+
+Make sure you are connected to **GlobalProtect** VPN (the globe icon, not the key icon).
+
+### Step 2: Login to JFrog in Browser
+
+1. Navigate to [https://npm.autodesk.com/](https://npm.autodesk.com/)
+
+2. Click the **Log in** button in the top right corner:
+
+![JFrog Login](./imgs/jfrog-login.png)
+
+3. Click **SAML SSO** to login with your Autodesk credentials:
+
+![Login with SSO](./imgs/login-with-sso.png)
+
+### Step 3: Authenticate npm in Terminal
 
 Run this command:
 
@@ -91,9 +107,13 @@ Run this command:
 npm login --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/ --auth-type=web
 ```
 
-A browser window will open. Complete the SSO login and return to your terminal.
+A URL will appear in your terminal. **Cmd+click** (or Ctrl+click) the link to open it in your browser:
 
-### Step 2: Verify
+![NPM Login Terminal](./imgs/npm-login.png)
+
+Since you're already logged into JFrog from Step 2, the authentication should complete automatically.
+
+### Step 4: Verify
 
 ```bash
 npm whoami --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/
@@ -102,6 +122,10 @@ npm whoami --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-
 You should see your Autodesk username.
 
 ### Troubleshooting npm auth
+
+**Error: `Token Generation Prohibited`**
+
+Complete Steps 1-2 first (login to JFrog in browser), then try Step 3 again.
 
 **Error: `Invalid auth configuration found`**
 ```bash
