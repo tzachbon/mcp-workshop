@@ -137,5 +137,3 @@ or
 See [cursor-config-example.json](./cursor-config-example.json) for a complete example.
 
 ## Next Step
-
-Continue to [05-build-real-tools](../05-build-real-tools/ENGINEER.md) to build more useful tools.

@@ -137,5 +137,3 @@ After running this prompt, Cursor will:
 | `src/index.ts` | Your server code (currently empty) |
 
 ## Next Step
-
-Continue to [03-create-server](../03-create-server/NON-ENGINEER.md) to add your first tool.

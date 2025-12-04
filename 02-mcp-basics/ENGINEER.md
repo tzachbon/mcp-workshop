@@ -155,5 +155,3 @@ my-mcp-server/
 ```
 
 ## Next Step
-
-Continue to [03-create-server](../03-create-server/ENGINEER.md) to add tools to your server.

@@ -25,7 +25,7 @@ Think of it like this:
 
 ### Tools
 Functions the AI can call. Each tool has:
-- A **name** (e.g., `get-pokemon`)
+- A **name** (e.g., `list-records`)
 - A **description** (what it does)
 - **Input schema** (what parameters it accepts)
 - **Output schema** (what it returns)
@@ -52,7 +52,3 @@ In this workshop, you'll create MCP servers that:
 2. **Airtable** - Interact with Airtable (with authentication)
 
 By the end, you'll understand how to turn any API into an MCP tool that Cursor can use.
-
-## Next Step
-
-Continue to [01-prerequisites](../01-prerequisites/) to set up your environment.
