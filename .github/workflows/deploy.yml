@@ -26,13 +26,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Use public npm registry
-        run: npm config set registry https://registry.npmjs.org/
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          rm -f .npmrc
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build RSpress site
         run: npm run build
