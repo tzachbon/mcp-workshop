@@ -8,13 +8,12 @@ Create a new MCP server project with all the necessary configuration.
 
 Copy and paste this entire prompt into Cursor:
 
----
+~~~
+Create a new MCP (Model Context Protocol) server project for me.
 
-**Create a new MCP (Model Context Protocol) server project for me.**
+Project location: Create in a new folder called `my-mcp-server` in my current workspace.
 
-**Project location:** Create in a new folder called `my-mcp-server` in my current workspace.
-
-**Required structure:**
+Required structure:
 ```
 my-mcp-server/
 ├── .npmrc
@@ -25,12 +24,12 @@ my-mcp-server/
     └── index.ts
 ```
 
-**.npmrc must contain:**
+.npmrc must contain:
 ```
 registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual
 ```
 
-**.gitignore must contain:**
+.gitignore must contain:
 ```
 node_modules/
 dist/
@@ -38,7 +37,7 @@ dist/
 *.log
 ```
 
-**package.json must contain:**
+package.json must contain:
 ```json
 {
   "name": "my-mcp-server",
@@ -60,7 +59,7 @@ dist/
 }
 ```
 
-**tsconfig.json must contain:**
+tsconfig.json must contain:
 ```json
 {
   "compilerOptions": {
@@ -78,7 +77,7 @@ dist/
 }
 ```
 
-**src/index.ts must contain:**
+src/index.ts must contain:
 ```typescript
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
@@ -94,18 +93,17 @@ const transport = new StdioServerTransport();
 await server.connect(transport);
 ```
 
-**After creating the files, run:**
+After creating the files, run:
 ```bash
 cd my-mcp-server
 npm install
 ```
 
-**Success criteria:**
+Success criteria:
 - All five files are created (.npmrc, .gitignore, package.json, tsconfig.json, src/index.ts)
-- `npm install` completes without errors
-- The `node_modules` folder is created
-
----
+- npm install completes without errors
+- The node_modules folder is created
+~~~
 
 ## Expected Outcome
 

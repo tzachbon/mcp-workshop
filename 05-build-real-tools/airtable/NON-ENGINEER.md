@@ -36,20 +36,19 @@ You need:
 
 Copy and paste this entire prompt into Cursor:
 
----
+~~~
+Create a complete Airtable MCP server for me.
 
-**Create a complete Airtable MCP server for me.**
+Project location: Create in a new folder called `airtable-mcp` in my current workspace.
 
-**Project location:** Create in a new folder called `airtable-mcp` in my current workspace.
+Required files:
 
-**Required files:**
-
-**1. .npmrc** (for Autodesk npm registry):
+1. .npmrc (for Autodesk npm registry):
 ```
 registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual
 ```
 
-**2. .gitignore:**
+2. .gitignore:
 ```
 node_modules/
 dist/
@@ -57,7 +56,7 @@ dist/
 *.log
 ```
 
-**3. package.json:**
+3. package.json:
 ```json
 {
   "name": "airtable-mcp",
@@ -78,7 +77,7 @@ dist/
 }
 ```
 
-**4. tsconfig.json:**
+4. tsconfig.json:
 ```json
 {
   "compilerOptions": {
@@ -92,7 +91,7 @@ dist/
 }
 ```
 
-**5. src/index.ts:**
+5. src/index.ts:
 ```typescript
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
@@ -191,18 +190,18 @@ const transport = new StdioServerTransport();
 await server.connect(transport);
 ```
 
-**After creating files, run:**
+After creating files, run:
 ```bash
 cd airtable-mcp
 npm install
 ```
 
-**Then find my absolute path:**
+Then find my absolute path:
 ```bash
 pwd
 ```
 
-**Now update my Cursor MCP config file directly:**
+Now update my Cursor MCP config file directly:
 
 First find my config file path:
 ```bash
@@ -214,7 +213,7 @@ Create the directory if needed:
 mkdir -p "$HOME/.cursor"
 ```
 
-Read the existing file at that path (create it if it doesn't exist), then add my Airtable server to the `mcpServers` object:
+Read the existing file at that path (create it if it doesn't exist), then add my Airtable server to the mcpServers object:
 
 ```json
 "airtable-server": {
@@ -231,30 +230,29 @@ Read the existing file at that path (create it if it doesn't exist), then add my
 }
 ```
 
-**I will provide you with:**
+I will provide you with:
 - My AIRTABLE_PAT (Personal Access Token)
-- My AIRTABLE_BASE_ID (starts with `app`)
-- My AIRTABLE_TABLE_NAME (can be table ID starting with `tbl` or the table name)
+- My AIRTABLE_BASE_ID (starts with app)
+- My AIRTABLE_TABLE_NAME (can be table ID starting with tbl or the table name)
 
-**Important:**
-- Use the absolute path from the `pwd` command above
+Important:
+- Use the absolute path from the pwd command above
 - Keep any existing servers in the config
 - Replace the placeholder values with my actual credentials
-- **Base ID** must start with `app` (from URL: `https://airtable.com/appXXXXXXXXXXXXX/...`)
-- **Table Name** can be the table ID (starts with `tbl`) or the actual table name
+- Base ID must start with app (from URL: https://airtable.com/appXXXXXXXXXXXXX/...)
+- Table Name can be the table ID (starts with tbl) or the actual table name
 - Save the updated config file
 
-**After updating the config, tell me to:**
+After updating the config, tell me to:
 1. Restart Cursor (Cmd+Shift+P → "Reload Window")
 2. Test by typing: "List my Airtable records"
 
-**Success criteria:**
+Success criteria:
 - All project files created
 - npm install succeeds
-- The mcp.json file at `$HOME/.cursor/mcp.json` is updated with my server and credentials
+- The mcp.json file at $HOME/.cursor/mcp.json is updated with my server and credentials
 - I can ask "list my Airtable records" and see results
-
----
+~~~
 
 ## After Running the Prompt
 

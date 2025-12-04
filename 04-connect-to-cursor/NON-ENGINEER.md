@@ -8,36 +8,35 @@ Configure Cursor to use your MCP server so you can test the greet tool.
 
 Copy and paste this entire prompt into Cursor:
 
----
+~~~
+I need you to configure Cursor to use my MCP server. Do this automatically by editing the config file.
 
-**I need you to configure Cursor to use my MCP server. Do this automatically by editing the config file.**
-
-**Step 1: Find my server's absolute path**
+Step 1: Find my server's absolute path
 
 Run this command:
 ```bash
 cd my-mcp-server && pwd
 ```
 
-Save the output - this is my project path. The full path to my server file is: `{project_path}/src/index.ts`
+Save the output - this is my project path. The full path to my server file is: {project_path}/src/index.ts
 
-**Step 2: Find and read the Cursor MCP config**
+Step 2: Find and read the Cursor MCP config
 
 First, find my home directory and the config file path:
 ```bash
 echo "$HOME/.cursor/mcp.json"
 ```
 
-The config file is at that path (e.g., `/Users/myusername/.cursor/mcp.json`).
+The config file is at that path (e.g., /Users/myusername/.cursor/mcp.json).
 
-Read this file. If it doesn't exist or the `.cursor` folder doesn't exist, create them:
+Read this file. If it doesn't exist or the .cursor folder doesn't exist, create them:
 ```bash
 mkdir -p "$HOME/.cursor"
 ```
 
-**Step 3: Update the config file**
+Step 3: Update the config file
 
-Add my server to the `mcpServers` object. The entry should look like this:
+Add my server to the mcpServers object. The entry should look like this:
 
 ```json
 "my-mcp-server": {
@@ -49,27 +48,26 @@ Add my server to the `mcpServers` object. The entry should look like this:
 }
 ```
 
-**Important rules:**
-- Replace `/ABSOLUTE/PATH/TO/` with the actual path from Step 1
+Important rules:
+- Replace /ABSOLUTE/PATH/TO/ with the actual path from Step 1
 - Keep any existing servers in the config - don't delete them
 - Make sure the JSON is valid after editing
 
-**Step 4: Write the updated config**
+Step 4: Write the updated config
 
 Save the updated config back to the mcp.json file.
 
-**Step 5: Tell me what to do next**
+Step 5: Tell me what to do next
 
 After updating the file:
 1. Tell me to restart Cursor (Cmd+Shift+P → "Reload Window" or quit and reopen)
 2. Tell me to test by typing: "Use the greet tool to say hello to Alice"
 
-**Success criteria:**
+Success criteria:
 - The mcp.json file is updated with my server entry
-- The path in the config is absolute (starts with `/` on Mac or `C:\` on Windows)
+- The path in the config is absolute (starts with / on Mac or C:\ on Windows)
 - Existing MCP servers in the config are preserved
-
----
+~~~
 
 ## Expected Outcome
 

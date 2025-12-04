@@ -8,13 +8,12 @@ Add a greeting tool to your MCP server.
 
 Copy and paste this entire prompt into Cursor:
 
----
+~~~
+Update my MCP server to include a greeting tool.
 
-**Update my MCP server to include a greeting tool.**
+File to modify: `my-mcp-server/src/index.ts`
 
-**File to modify:** `my-mcp-server/src/index.ts`
-
-**Replace the entire contents with:**
+Replace the entire contents with:
 
 ```typescript
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
@@ -52,16 +51,15 @@ const transport = new StdioServerTransport();
 await server.connect(transport);
 ```
 
-**What this tool does:**
-- Tool name: `greet`
-- Input: Takes a `name` parameter (text)
+What this tool does:
+- Tool name: greet
+- Input: Takes a name parameter (text)
 - Output: Returns a greeting like "Hello, Alice! Welcome to MCP."
 
-**Success criteria:**
+Success criteria:
 - The file is saved without errors
 - No red underlines in the editor (after a moment for TypeScript to check)
-
----
+~~~
 
 ## Expected Outcome
 
