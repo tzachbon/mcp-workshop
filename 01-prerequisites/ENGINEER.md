@@ -77,7 +77,57 @@ echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
 source ~/.bashrc
 ```
 
+---
+
+## NPM Authentication (Required for Autodesk)
+
+Autodesk blocks anonymous npm access. You must authenticate before running `npm install`.
+
+### Step 1: Authenticate
+
+Run this command:
+
+```bash
+npm login --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/ --auth-type=web
+```
+
+A browser window will open. Complete the SSO login and return to your terminal.
+
+### Step 2: Verify
+
+```bash
+npm whoami --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/
+```
+
+You should see your Autodesk username.
+
+### Troubleshooting npm auth
+
+**Error: `Invalid auth configuration found`**
+```bash
+npm config fix
+```
+
+**Error: `401 Unauthorized` or `403 Forbidden`**
+
+Your authentication may have expired. Re-run the login command:
+```bash
+npm login --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/ --auth-type=web
+```
+
+**Check your existing auth:**
+```bash
+cat ~/.npmrc
+```
+
+You should see entries with `_authToken` for `npm.autodesk.com`.
+
+**Still stuck?**
+
+Ask in [#tech-artifactory-build](https://autodesk.enterprise.slack.com/archives/C0YDHLUCX) on Slack.
+
+---
+
 ## Next Step
 
 Continue to [02-mcp-basics](../02-mcp-basics/ENGINEER.md)
-

@@ -2,14 +2,14 @@
 
 ## Goal
 
-Verify that Node.js is installed on your system. If not, get guided through the installation.
+Verify that Node.js is installed and npm is authenticated to the Autodesk registry.
 
 ## Prompt
 
 Copy and paste this entire prompt into Cursor:
 
-```
-I need you to check if Node.js is installed on my system and help me install it if needed.
+~~~
+I need you to check if Node.js is installed on my system, help me install it if needed, and then authenticate npm with the Autodesk registry.
 
 Step 1: Check current installation
 
@@ -38,10 +38,22 @@ After installation, run the version check commands again to confirm:
 node --version
 npm --version
 
+Step 5: Authenticate npm with Autodesk registry
+
+Run this command to authenticate (a browser window will open for SSO login):
+npm login --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/ --auth-type=web
+
+After completing the browser login, verify authentication:
+npm whoami --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/
+
+If there's an auth config error, run:
+npm config fix
+
 Success criteria:
 - node --version shows v20.x.x or later
 - npm --version shows v10.x.x or later
-```
+- npm whoami shows my Autodesk username
+~~~
 
 ## Expected Outcome
 
@@ -49,7 +61,8 @@ After running this prompt, Cursor will:
 1. Check your Node.js installation
 2. Tell you if you need to install or upgrade
 3. Guide you through the installation process if needed
-4. Verify the installation succeeded
+4. Help you authenticate npm with the Autodesk registry
+5. Verify everything is working
 
 ## Troubleshooting
 
@@ -62,7 +75,11 @@ After running this prompt, Cursor will:
 - On Windows: Run Cursor as Administrator
 - On Linux: You may need `sudo` for some commands
 
+**npm install fails with 401/403 errors?**
+- Re-run the npm login command from Step 5
+- Make sure you completed the browser SSO login
+- Ask for help in [#tech-artifactory-build](https://autodesk.enterprise.slack.com/archives/C0YDHLUCX) on Slack
+
 ## Next Step
 
-Once Node.js is installed, continue to [02-mcp-basics](../02-mcp-basics/NON-ENGINEER.md)
-
+Once Node.js is installed and npm is authenticated, continue to [02-mcp-basics](../02-mcp-basics/NON-ENGINEER.md)
