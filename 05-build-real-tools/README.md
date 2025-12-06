@@ -22,7 +22,7 @@ Build an MCP server that interacts with Airtable:
 ## Choose Your Track
 
 - **Engineers**: Follow [airtable/ENGINEER](./airtable/ENGINEER) for step-by-step implementation
-- **Non-Engineers**: Follow [airtable/NON-ENGINEER](./airtable/NON-ENGINEER) for a ready-to-use prompt
+- **Non-Engineers**: Follow [airtable/NON-ENGINEER](./airtable/NON-ENGINEER) for a ready-to-use prompt. To log with SSO to Airtable, open http://localhost:3000/05-build-real-tools/airtable/NON-ENGINEER.html
 
 ## What You'll Learn
 

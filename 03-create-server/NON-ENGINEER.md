@@ -8,7 +8,7 @@ Add a greeting tool to your MCP server.
 
 Copy and paste this entire prompt into Cursor:
 
-~~~
+~~~text
 Update my MCP server to include a greeting tool.
 
 File to modify: `my-mcp-server/src/index.ts`

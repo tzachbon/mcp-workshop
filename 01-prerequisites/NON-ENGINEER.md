@@ -32,7 +32,7 @@ Once logged in, you're ready to run the prompt below.
 
 Copy and paste this entire prompt into Cursor:
 
-```
+```text
 I need you to check if Node.js is installed on my system, help me install it if needed, and then authenticate npm with the Autodesk registry.
 
 Step 1: Check current installation

@@ -8,7 +8,7 @@ Configure Cursor to use your MCP server so you can test the greet tool.
 
 Copy and paste this entire prompt into Cursor:
 
-~~~
+~~~text
 I need you to configure Cursor to use my MCP server. Do this automatically by editing the config file.
 
 Step 1: Find my server's absolute path

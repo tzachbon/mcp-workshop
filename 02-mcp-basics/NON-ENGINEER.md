@@ -8,7 +8,7 @@ Create a new MCP server project with all the necessary configuration.
 
 Copy and paste this entire prompt into Cursor:
 
-~~~
+~~~text
 Create a new MCP (Model Context Protocol) server project for me.
 
 Project location: Create in a new folder called `my-mcp-server` in my current workspace.

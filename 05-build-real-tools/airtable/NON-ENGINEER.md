@@ -7,7 +7,7 @@ Create an MCP server that can read and write to your Airtable base by having Cur
 ## Before You Start
 
 You need:
-1. **Airtable account** - Free at [airtable.com](https://airtable.com)
+1. **Airtable account** - Sign in with your Autodesk email at [airtable.com](https://airtable.com)
 2. **A base with data** - Any table works (tasks, contacts, etc.)
 3. **Personal Access Token** - See instructions below
 
