@@ -18,7 +18,7 @@ export default defineConfig({
       {
         icon: 'github',
         mode: 'link',
-        content: 'https://github.com/modelcontextprotocol',
+        content: 'https://github.com/tzachbon/mcp-workshop',
       },
     ],
     sidebar: {
