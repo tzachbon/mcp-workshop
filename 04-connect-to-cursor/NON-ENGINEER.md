@@ -78,6 +78,12 @@ After running this prompt, Cursor will:
 4. Save the updated config
 5. Tell you to restart and test
 
+## How to test it
+
+1. Restart Cursor (Cmd+Shift+P, run "Reload Window", or quit and reopen) so it notices the updated MCP config.
+2. In Cursor, ask the greet tool to say hello to Alice by typing: `Use the greet tool to say hello to Alice`.
+3. Confirm the greet tool responds with a successful message that proves Cursor is using your server.
+
 ## Config File Location
 
 Run this to find your exact path:
