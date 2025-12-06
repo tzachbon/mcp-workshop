@@ -135,5 +135,3 @@ or
 ## Example Configuration File
 
 See [cursor-config-example.json](./cursor-config-example.json) for a complete example.
-
-## Next Step

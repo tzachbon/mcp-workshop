@@ -135,5 +135,3 @@ After running this prompt, Cursor will:
 | `package.json` | Lists dependencies and scripts |
 | `tsconfig.json` | Configures TypeScript |
 | `src/index.ts` | Your server code (currently empty) |
-
-## Next Step

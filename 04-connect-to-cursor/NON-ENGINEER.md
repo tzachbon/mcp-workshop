@@ -145,7 +145,3 @@ If you had other servers already, they'll still be there:
 - Check the absolute path is correct
 - Make sure `npm install` was completed in your project
 - Look for error indicators next to your server in Cursor's MCP panel
-
-## Next Step
-
-Once your greet tool works, continue to [05-build-real-tools](../05-build-real-tools/airtable/NON-ENGINEER) to build more useful tools!

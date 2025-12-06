@@ -86,5 +86,3 @@ After running this prompt, your server will have a `greet` tool that:
 **File not found?**
 - Make sure you created the project in step 02
 - Check that you're in the right workspace
-
-## Next Step

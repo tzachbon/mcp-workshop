@@ -151,5 +151,3 @@ You should see entries with `_authToken` for `npm.autodesk.com`.
 Ask in [#tech-artifactory-build](https://autodesk.enterprise.slack.com/archives/C0YDHLUCX) on Slack.
 
 ---
-
-## Next Step

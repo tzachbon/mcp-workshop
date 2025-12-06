@@ -42,7 +42,3 @@ A simple **greet** tool that:
 Example:
 - Input: `{ name: "Alice" }`
 - Output: `"Hello, Alice! Welcome to MCP."`
-
-## Next Step
-
-After creating the tool, continue to [04-connect-to-cursor](../04-connect-to-cursor/) to test it in Cursor.

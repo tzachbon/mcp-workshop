@@ -151,5 +151,3 @@ server.registerTool(
     }
 );
 ```
-
-## Next Step

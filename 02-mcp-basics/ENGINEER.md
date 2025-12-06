@@ -153,5 +153,3 @@ my-mcp-server/
 └── src/
     └── index.ts
 ```
-
-## Next Step

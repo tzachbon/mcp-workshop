@@ -139,7 +139,3 @@ After running this prompt, Cursor will:
 - Re-run the npm login command from Step 5-6
 - Make sure you completed the browser SSO login
 - Ask for help in [#tech-artifactory-build](https://autodesk.enterprise.slack.com/archives/C0YDHLUCX) on Slack
-
-## Next Step
-
-Once Node.js is installed and npm is authenticated, continue to [02-mcp-basics](../02-mcp-basics/NON-ENGINEER)
