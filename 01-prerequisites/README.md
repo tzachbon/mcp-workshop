@@ -49,6 +49,10 @@ Make sure you are connected to **GlobalProtect** VPN (the globe icon, not the ke
 
 ### Step 3: Authenticate npm in Terminal
 
+Open a terminal in Cursor (View > Terminal):
+
+![Open Terminal](./imgs/open-terminal.gif)
+
 Run this command:
 
 ```bash

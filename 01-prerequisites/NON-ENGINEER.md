@@ -62,14 +62,27 @@ After installation, run the version check commands again to confirm:
 node --version
 npm --version
 
-Step 5: Authenticate npm with Autodesk registry
+Step 5: Check npm authentication status
 
-Run this command to authenticate:
-npm login --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/ --auth-type=web
+Run this command to check if I'm already authenticated:
+npm whoami --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/
 
-A URL will appear in the terminal. I need to Cmd+click (or Ctrl+click) the link to open it in my browser.
+If it shows a username, I'm already authenticated. Skip to success criteria.
 
-After the browser shows success, verify authentication:
+If it shows an error (ENEEDAUTH or similar), tell me I need to run the login command manually. Do NOT run the login command yourself. Instead, give me these instructions:
+
+"You need to authenticate manually. Please:
+1. Open the terminal in Cursor (View > Terminal or Ctrl+`)
+2. Copy and paste this command:
+   npm login --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/ --auth-type=web
+3. A URL will appear. Cmd+click (Mac) or Ctrl+click (Windows) to open it
+4. After the browser shows success, come back and tell me"
+
+Wait for me to confirm I completed the manual login before continuing.
+
+Step 6: Verify authentication
+
+After I confirm, run the whoami command again:
 npm whoami --registry=https://npm.autodesk.com/artifactory/api/npm/autodesk-npm-virtual/
 
 If there's an auth config error, run:
@@ -81,13 +94,21 @@ Success criteria:
 - npm whoami shows my Autodesk username
 ```
 
-## When Cursor Runs npm login
+## If You Need to Run npm login Manually
 
-When Cursor runs the `npm login` command, you'll see a URL in the terminal. **Cmd+click** (or Ctrl+click) the link:
+If Cursor tells you to authenticate manually, you'll run the login command yourself in the terminal:
+
+1. Open the terminal in Cursor (View > Terminal):
+
+![Open Terminal](./imgs/open-terminal.gif)
+
+2. Paste the command Cursor gives you
+3. A URL will appear in the terminal. **Cmd+click** (Mac) or **Ctrl+click** (Windows) to open it:
 
 ![NPM Login Terminal](./imgs/npm-login.png)
 
-Since you already logged into JFrog in the browser (Step 2 above), the authentication should complete automatically.
+4. The browser will authenticate you automatically (since you logged into JFrog earlier)
+5. Once the browser shows success, go back to Cursor and tell it you're done
 
 ## Expected Outcome
 
@@ -95,8 +116,9 @@ After running this prompt, Cursor will:
 1. Check your Node.js installation
 2. Tell you if you need to install or upgrade
 3. Guide you through the installation process if needed
-4. Help you authenticate npm with the Autodesk registry
-5. Verify everything is working
+4. Check if you're already authenticated to npm
+5. If not authenticated, give you instructions to run the login command yourself
+6. Verify authentication is working after you confirm
 
 ## Troubleshooting
 
@@ -114,7 +136,7 @@ After running this prompt, Cursor will:
 - On Linux: You may need `sudo` for some commands
 
 **npm install fails with 401/403 errors?**
-- Re-run the npm login command from Step 5
+- Re-run the npm login command from Step 5-6
 - Make sure you completed the browser SSO login
 - Ask for help in [#tech-artifactory-build](https://autodesk.enterprise.slack.com/archives/C0YDHLUCX) on Slack
 
